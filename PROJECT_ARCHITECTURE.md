@@ -116,3 +116,16 @@ Automation definitions: [`.github/workflows/ci.yml`](.github/workflows/ci.yml). 
 Before turning this checkout into a customer deployment, establish the input contract, data ownership, access controls, failure response, evaluation criteria, and rollback owner. Repository fixtures and unit tests demonstrate local behavior; they do not establish throughput, uptime, compliance, or business impact.
 
 A useful architecture review starts with the linked implementation: identify where input enters, where a decision is made, which state can change, and which external dependency can fail. Add a deployment view only for infrastructure that is actually configured and exercised.
+
+## Request flow
+
+The decision flow for `POST /extract` is in [docs/PROCESS_FLOW.md](docs/PROCESS_FLOW.md).
+
+```mermaid
+flowchart LR
+  C["Client JSON"] --> A["FastAPI src/skillsx/main.py"]
+  A --> H["POST /extract"]
+  H --> D["extract.py"]
+  D --> R["JSON result or HTTP 422"]
+```
+
